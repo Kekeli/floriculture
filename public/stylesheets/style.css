@@ -1,8 +1,36 @@
 body {
-  padding: 50px;
+  /* Without top padding (borrowed from one of the bootstrap samples) the bootstrap navbar
+        clobbers the top of the content. */
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+/* used for the flower images and write up in DBL */
+#flower-image {
+    float: left;
+    width: 40%;
+}
+
+#flower-info {
+    float: right;
+    width: 56%;
+    padding: 5px 5px 5px 5px;
+}
+
+.bottom-border {
+    border-width: medium;
+    border-color: #5E92AA;
+    border-bottom-style: solid;
+    margin-bottom: 5px;
+}
+
+.table-striped tbody > tr:nth-child(odd) > td,
+.table-striped tbody > tr:nth-child(odd) > th {
+  background-color: #aaccaa;
 }

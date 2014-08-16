@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Online database for the floriculture greenhouse.">
+    <meta name="author" content="Peanut Productions">
+
+    <link rel='stylesheet' type="text/css" href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' type="text/css" href='/stylesheets/bootstrap-responsive.css' />
+    <link rel='stylesheet' type="text/css" href='/stylesheets/style.css' />
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+
+      <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">The Floriculture Greenhouse</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="/">Home</a></li>
+              <li><a href="/plants">Plants</a></li>
+              <li><a href="/about">About</a></li>
+            </ul>
+            <ul class="nav pull-right">
+              <% if (typeof (user) == 'undefined' ) { %>
+                <li><a href="/signup">Register</a></li>
+                <li><a href="/login">Login</a></li>
+              <% } else { %>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/logout">Logout</a></li>
+              <% } %>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+      </div>
+ 
+      <div class="container">
+        <div class="page-header">
+          <h3><%= title %></h3>
+        </div>
+        <div class="span12">    
+          <%- body %>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer">
+      <div class="container">
+            <a id="github-link" href="https://github.com/Kekeli/node-mongodb-garden" target="_blank">Code</a> by
+              <a href="http://kaddidle.com/" id="dbl" target="_blank">Peanut Productions</a> &#169; 2013
+      </div>  
+    </div>   
+
+    <!-- Some JavaScript, placed at the end of the document so the pages load faster -->
+
+    <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.7.1.min.js"><\/script>')</script>
+    <script>
+     $(document).ready(function () {
+        $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
+    });
+    </script>
+    <script src="/javascripts/bootstrap.js"></script>
+   <!-- add analytics? -->
+  </body>
+</html>

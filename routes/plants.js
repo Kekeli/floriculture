@@ -28,7 +28,7 @@ var Plant    = require('../models/plant' );
     });
   });
 
-app.get('/plants/edit/:id', isLoggedIn, function( req, res, next ){
+app.get('/plants/edit/:id', function( req, res, next ){
 
   var id = req.params.id;
   console.log('Retrieving plant for edit: ' + id);
@@ -38,7 +38,7 @@ app.get('/plants/edit/:id', isLoggedIn, function( req, res, next ){
       if( err ) return next( err );
       if (!plant) return next(new NotFound('Plant not found'));
 
-      console.info('Plant %s', plant.botanical_name);
+      console.info('Plant %s', plant.getBotanicalName());
       res.render( 'edit', {
         
           locals: { p : plant, title  : 'Edit the plant', user : req.user  }
@@ -58,7 +58,7 @@ app.post('/plants',  function ( req, res, next ){
     if( err ) return next( err );
     if (!plant) return next(new Error('Failed to save.'));
 
-    console.info('Added %s with id=%s', plant.common_name, plant._id);
+    console.info('Added %s with id=%s', plant.getBotanicalName(), plant._id);
 
     res.redirect( '/plants' );
   });
@@ -76,7 +76,7 @@ app.get('/plants/:id', function( req, res, next ){
       if( err ) return next( err );
       if (!plant) return next(new Error('Failed to find plant.'));
 
-      console.info('Found %s with id=%s', plant.botanical_name, plant._id);
+      console.info('Found %s with id=%s', plant.getBotanicalName(), plant._id);
 
       res.render( 'plant', {
         title : 'Show me the plant!',
@@ -87,7 +87,7 @@ app.get('/plants/:id', function( req, res, next ){
 });
 
 // Update
-app.put('/plants/:id', isLoggedIn, function( req, res, next ){
+app.put('/plants/:id', function( req, res, next ){
 
   Plant.findById( req.params.id, function ( err, plant ){
     if (!plant) return next(new NotFound('Plant not found'));

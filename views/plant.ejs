@@ -1,12 +1,12 @@
 <div id="plant">
     <div id="flower-image">
-        <img src="http://kaddidle.com/green/images/freshlookyellow.jpg" alt="<%= plant.Family + ' ' + plant.Genus %>"
+        <img src="http://kaddidle.com/green/images/freshlookyellow.jpg" alt="<%= plant.getBotanicalName() %>"
         height="450" width="360" />
     </div>
     <div id="flower-info">
         <div class="panel panel-default">
             <div class="panel-heading bottom-border">
-                <h4 class="panel-title"><%= plant.Family + ' ' + plant.Genus %></h4>
+                <h4 class="panel-title"><%= plant.getBotanicalName() %></h4>
             </div>
             <div class="panel-body">
                 <span class="label label-info">Family:</span> &nbsp; <%= plant.Family ? plant.Family : 'Unknown' %><br />
@@ -14,7 +14,7 @@
                 <span class="label label-info">Species:</span> &nbsp; <%= plant.Species ? plant.Species : 'Unknown' %><br />
                 <span class="label label-info">Subspecies:</span> &nbsp; <%= plant.Subspecies ? plant.Subspecies : 'Unknown' %><br />
                 <span class="label label-info">Common name:</span> &nbsp; <%= plant.Common_Name ? plant.Common_Name : 'Unknown' %><br />
-                <span class="label label-info">Location:</span> &nbsp; <%= 'Section ' + plant.Section + ', Bench ' + plant.Bench%><br />
+                <span class="label label-info">Location:</span> &nbsp; <%= plant.getLocation() %><br />
                 <%= plant.comments ? plant.comments : '' %><br />
                 <br />
                 <br />

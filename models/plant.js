@@ -31,4 +31,17 @@ var plantSchema = new Schema({
     updated_by  : String
 });
 
+
+// utility methods
+plantSchema.methods.getBotanicalName = function getBotanicalName() {
+  return this.Family + ' ' + this.Genus;
+};
+
+plantSchema.methods.getLocation = function getLocation() {
+    var loc = 'Section: ' + this.Section + ', Bench ' + this.Bench;
+    if (this.Hanging)
+        loc = loc + ' (Hanging)';
+    return loc;
+};
+
 module.exports = mongoose.model( 'Plant', plantSchema );

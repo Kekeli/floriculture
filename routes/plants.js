@@ -22,7 +22,7 @@ var Plant    = require('../models/plant' );
     });
 });
 
-  app.get('/plants/new', function ( req, res ){
+  app.get('/plants/new', isLoggedIn, function ( req, res ){
     res.render('new', {
       title : 'Add a plant!' 
     });
@@ -113,7 +113,7 @@ app.put('/plants/:id', isLoggedIn, function( req, res, next ){
 // delete works peachy!
 // however, would be nice to have a confirmation msg
 // and should mark as deleted in db rather than removed
-app.get('/plants/destroy/:id', function ( req, res, next ){
+app.get('/plants/destroy/:id', isLoggedIn, function ( req, res, next ){
 
   console.log('in plants.destroy with id: '+ req.params.id);
 

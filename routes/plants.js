@@ -15,7 +15,7 @@ var Plant    = require('../models/plant' );
       if( err ) return next( err );
       
       res.render( 'plants', {
-          title : 'The DBL Plants',
+          title : 'Plant list',
           plants : plants,
           user : req.user 
       });

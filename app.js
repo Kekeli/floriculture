@@ -39,7 +39,7 @@ app.configure(function() {
     cookie: {maxAge: 60000}, 
     secret: 'some pig!',
     store: new mongoStore({
-          url: 'mongodb://localhost/gardens',
+          url: 'mongodb://localhost/greenhouse',
           collection : 'sessions'
         })
     })

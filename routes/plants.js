@@ -7,7 +7,7 @@ var paginate = require('paginate') ({
 
 var Plant    = require('../models/plant' );
 
- app.get('/plants', isLoggedIn, function(req, res, next) {
+ app.get('/plants', function(req, res, next) {
                 
   Plant
   .find()
@@ -28,7 +28,7 @@ var Plant    = require('../models/plant' );
     });
   });
 
-app.get('/plants/edit/:id', function( req, res, next ){
+app.get('/plants/edit/:id', isLoggedIn, function( req, res, next ){
 
   var id = req.params.id;
   console.log('Retrieving plant for edit: ' + id);
@@ -64,7 +64,7 @@ app.post('/plants',  function ( req, res, next ){
   });
 });
 
-// by clicking on plant's botanical name, display full plant info and image
+// by clicking on plant's default image, display full plant info and image
 app.get('/plants/:id', function( req, res, next ){
   
   var id = req.params.id;
@@ -87,15 +87,19 @@ app.get('/plants/:id', function( req, res, next ){
 });
 
 // Update
-app.put('/plants/:id', function( req, res, next ){
+app.put('/plants/:id', isLoggedIn, function( req, res, next ){
 
   Plant.findById( req.params.id, function ( err, plant ){
     if (!plant) return next(new NotFound('Plant not found'));
     
-    plant.botanical_name = req.body.botanical_name;
-    plant.common_name = req.body.common_name;
-    plant.comments = req.body.comments;
-    plant.origin = req.body.origin;
+    plant.Family = req.body.Family;
+    plant.Genus = req.body.Genus;
+    plant.Species = req.body.Species;
+    plant.Common_Name = req.body.Common_Name;
+    plant.Section = req.body.Section;
+    plant.Bench = req.body.Bench;
+    //plant.comments = req.body.comments;
+    //plant.origin = req.body.origin;
     plant.image_url = req.body.image_url;
     plant.updated_at = Date.now();
     plant.save( function ( err ){
@@ -132,9 +136,11 @@ function validate(plant) {
     errors.push(msg);
   };
 
-  v.check(plant.botanical_name, 'Please enter the botanical name').len(1, 50);
-  v.check(plant.common_name, 'Please enter the common name').len(1, 100);
-  v.check(plant.origin, 'Please enter the origin or locale(s)').len(1, 100);
+  v.check(plant.Family, 'Please enter the family').len(1, 50);
+  v.check(plant.Genus, 'Please enter the genus').len(1, 50);
+  v.check(plant.Species, 'Please enter the species').len(1, 50);
+  v.check(plant.Common_Name, 'Please enter the common name').len(1, 100);
+  //v.check(plant.origin, 'Please enter the origin or locale(s)').len(1, 100);
 
   return errors;
 }

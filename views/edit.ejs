@@ -1,0 +1,22 @@
+
+
+  <form action="/plants/<%= p._id %>" method="post" accept-charset="utf-8">
+  	<input type="hidden" name="_id" value="<%= p._id %>">
+  	<input type="hidden" name="_method" value="PUT">
+    <div class="item-new">
+		<label for="family">Family: </label><input class="input" type="text" name="family" value="<%= p.Family %>"/>
+		<label for="genus">Genus: </label><input class="input" type="text" name="genus" value="<%= p.Genus %>"/>
+		<label for="species">Species: </label><input class="input" type="text" name="species" value="<%= p.Species %>"/>
+		<label for="subspecies">Subspecies: </label><input class="input" type="text" name="subspecies" value="<%= p.Subspecies %>"/>
+		<label for="common_name">Common Name: </label> <input class="input" type="text" name="common_name" value="<%= p.Common_Name %>" />
+		<label for="section">Section: </label><input class="input" type="text" name="section" value="<%= p.Section %>"/>
+		<label for="bench">Bench: </label><input class="input" type="text" name="bench" value="<%= p.Bench %>"/>
+		<label for="origin">Origin: </label><input class="input" type="text" name="origin" value="<%= p.origin %>" />
+		<label for="comments">Comments: </label><input class="input" type="text" name="comments" value="<%= p.comments %>" />
+		<label for="image_url">Image url: </label><input class="input-xxlarge" type="text" name="image_url" value="<%= p.image_url %>" />
+
+		<br />
+		<input type="submit" class="btn btn-small btn-primary" value="Save" id="btnSend" />
+	</div>
+  </form>
+

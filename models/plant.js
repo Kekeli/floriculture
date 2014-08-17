@@ -31,10 +31,17 @@ var plantSchema = new Schema({
     updated_by  : String
 });
 
+var BASE_IMAGE_URI = "/images";
 
 // utility methods
 plantSchema.methods.getBotanicalName = function getBotanicalName() {
   return this.Family + ' ' + this.Genus;
+};
+
+plantSchema.methods.getImageUrl = function getImageUrl() {
+    if (this.image_url)
+        return BASE_IMAGE_URI + '/' + this.Family + '/' + this.image_url;
+    return BASE_IMAGE_URI + '/' + '404error.gif'; 
 };
 
 plantSchema.methods.getLocation = function getLocation() {

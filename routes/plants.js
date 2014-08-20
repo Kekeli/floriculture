@@ -10,7 +10,7 @@ var Plant    = require('../models/plant' );
  app.get('/plants', function(req, res, next) {
                 
   Plant
-  .find()
+  .find().sort({Family:1})
   .paginate({page: req.query.page },  function ( err, plants ){
       if( err ) return next( err );
       

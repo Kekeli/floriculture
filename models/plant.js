@@ -39,9 +39,9 @@ plantSchema.methods.getBotanicalName = function getBotanicalName() {
 };
 
 plantSchema.methods.getImageUrl = function getImageUrl() {
-    if (this.image_url)
+    //if (this.image_url)
         return BASE_IMAGE_URI + '/' + this.Family + '/' + this.image_url;
-    return BASE_IMAGE_URI + '/' + '404error.gif'; 
+    //return BASE_IMAGE_URI + '/' + '404error.gif'; 
 };
 
 plantSchema.methods.getLocation = function getLocation() {

@@ -2,15 +2,25 @@
  * Module dependencies.
  */
 
-var express = require('express')
-	, app = express()
-	, path = require('path')
-	, http = require('http')
-	, mongoStore = require('connect-mongo')(express)
-	, partials = require('express-partials')
-	, passport = require('passport')
-	, flash = require('connect-flash')
-	;
+var express = require('express');
+var app = express();
+var port = process.env.PORT || 3000;
+
+var morgan       = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser   = require('body-parser');
+var session      = require('express-session');
+var methodOverride = require('method-override');
+
+var path = require('path');
+var http = require('http');
+var mongoStore = require('connect-mongo')(session);
+var partials = require('express-partials');
+var passport = require('passport');
+var flash = require('connect-flash');
+// var favicon = require('serve-favicon');
+var errorHandler = require('errorHandler');
+
 
 var db = require('./config/db');
 new db.startup();
@@ -18,24 +28,25 @@ require('./config/passport')(passport); // pass passport for configuration
 
 
 
-app.configure(function() {
   // todo: kill off the partials crutch
   // and go all Express 3ish with Jade?
   // load the express-partials middleware
   app.use(partials());
 
   // all environments
-  app.set('port', process.env.PORT || 3000);
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'ejs');
   app.use(require('less-middleware')( path.join(__dirname, 'public') ));
-  app.use(express.favicon());
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
+  // app.use(favicon());
+  app.use(morgan('dev'));
+  
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({'extended':'true'})); 
+  app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+  app.use(methodOverride());
 
-  app.use(express.cookieParser('some pig!'));
-  app.use(express.session({
+  app.use(cookieParser());
+  app.use(session({
     cookie: {maxAge: 60000}, 
     secret: 'some pig!',
     store: new mongoStore({
@@ -49,28 +60,12 @@ app.configure(function() {
   app.use(passport.session());
   app.use(flash());
 
-  app.use(express.static(path.join(__dirname, 'public')));
-  app.use(app.router);
-
-  // development only
-  if ('development' == app.get('env')) {
-    app.use( express.errorHandler({ dumpExceptions : true, showStack : true }));
-    app.locals.pretty = true;
-    // sendgrid = {
-    //  send: function(opts, callback) {
-    //    console.log('Email:', opts);
-    //    callback(true, opts);
-    //  }
-    // }
-  }
-});
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(app.router);
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+  app.use(errorHandler({ dumpExceptions : true, showStack : true }));
   app.locals.pretty = true;
 }
 
@@ -97,6 +92,6 @@ app.all('*', function(req, res){
 })
 
 // the meat and potatoes
-http.createServer(app).listen(app.get('port'), function(){
-  console.log( 'Express server listening on port %d in %s mode', app.get('port'), app.settings.env );
+http.createServer(app).listen(port, function(){
+  console.log( 'Express server listening on port %d in %s mode', port, app.settings.env );
 });

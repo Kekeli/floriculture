@@ -88,8 +88,8 @@ app.locals.errors = {};
 app.locals.message = {};
 
 // Routes
-require('./routes/index.js')(app, passport); 
-require('./routes/plants.js')(app, passport); 
+require('./app/routes/index.js')(app, passport); 
+require('./app/routes/plants.js')(app, passport); 
 
 // Error handling
 app.all('*', function(req, res){

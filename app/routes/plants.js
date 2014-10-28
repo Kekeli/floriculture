@@ -28,7 +28,7 @@ var Plant    = require('../models/plant' );
     });
   });
 
-app.get('/plants/edit/:id', function( req, res, next ){
+app.get('/plants/edit/:id', isLoggedIn, function( req, res, next ){
 
   var id = req.params.id;
   console.log('Retrieving plant for edit: ' + id);

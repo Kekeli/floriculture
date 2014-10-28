@@ -18,7 +18,7 @@ var flash = require('connect-flash');
 var favicon = require('serve-favicon');
 var errorHandler = require('errorHandler');
 
-var db = require('./config/db');
+var db = require('./config/database');
 new db.startup();
 
 // pass passport for configuration

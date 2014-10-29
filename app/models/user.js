@@ -1,8 +1,7 @@
 var mongoose = require( 'mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
-var Schema = mongoose.Schema
-    , ObjectId = Schema.ObjectId;
+var Schema = mongoose.Schema;
 
 // define user schema
 var userSchema = new Schema({

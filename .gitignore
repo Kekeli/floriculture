@@ -7,8 +7,14 @@ ehthumbs.db
 
 .DS_Store
 node_modules
+
 *.sock
 
 .sass-cache
 sass
 config.rb
+
+.project
+.settings/
+coverage/
+npm-debug.log

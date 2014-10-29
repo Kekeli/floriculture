@@ -1,17 +1,27 @@
 // plants.js
-module.exports = function(app, passport) {
 var mongoose = require( 'mongoose' );
 var paginate = require('paginate') ({
   mongoose : mongoose
 });
+
+module.exports = function(app) {
+
+function NotFound(msg){
+  this.name = 'NotFound';
+  Error.call(this, msg);
+  Error.captureStackTrace(this, arguments.callee);
+} 
 
 var Plant    = require('../models/plant' );
 
  app.get('/plants', function(req, res, next) {
                 
   Plant
-  .find().sort({Family:1})
+  .find()
+  .sort({Family:1})
+  /*exported paginate */
   .paginate({page: req.query.page },  function ( err, plants ){
+  
       if( err ) return next( err );
       
       res.render( 'plants', {
@@ -33,8 +43,8 @@ app.get('/plants/edit/:id', isLoggedIn, function( req, res, next ){
   var id = req.params.id;
   console.log('Retrieving plant for edit: ' + id);
 
-  Plant.
-    findOne( {_id: req.params.id }, function ( err, plant ){
+  Plant
+  .findOne( {_id: req.params.id }, function ( err, plant ){
       if( err ) return next( err );
       if (!plant) return next(new NotFound('Plant not found'));
 
@@ -54,7 +64,7 @@ app.post('/plants',  function ( req, res, next ){
     return next(new Error('No data provided.'));
 
   new Plant(req.body)
-  .save( function ( err, plant, count ){
+  .save( function ( err, plant ){
     if( err ) return next( err );
     if (!plant) return next(new Error('Failed to save.'));
 
@@ -119,7 +129,7 @@ app.get('/plants/destroy/:id', isLoggedIn, function ( req, res, next ){
 
   Plant.findById( req.params.id, function ( err, plant ){
     
-    plant.remove( function ( err, plant, count ){
+    plant.remove( function ( err ){
       if( err ) return next( err );
 
       res.redirect( '/plants' );
@@ -127,23 +137,6 @@ app.get('/plants/destroy/:id', isLoggedIn, function ( req, res, next ){
   });
 });
 
-function validate(plant) {
-  var v = new Validator()
-    , errors = []
-    ;
-
-  v.error = function(msg) {
-    errors.push(msg);
-  };
-
-  v.check(plant.Family, 'Please enter the family').len(1, 50);
-  v.check(plant.Genus, 'Please enter the genus').len(1, 50);
-  v.check(plant.Species, 'Please enter the species').len(1, 50);
-  v.check(plant.Common_Name, 'Please enter the common name').len(1, 100);
-  //v.check(plant.origin, 'Please enter the origin or locale(s)').len(1, 100);
-
-  return errors;
-}
 
 };
 

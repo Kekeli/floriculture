@@ -12,3 +12,7 @@ node_modules
 .sass-cache
 sass
 config.rb
+
+.project
+.settings/
+coverage/

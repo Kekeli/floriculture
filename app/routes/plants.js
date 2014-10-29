@@ -1,9 +1,11 @@
 // plants.js
-module.exports = function(app, passport) {
-var mongoose = require( 'mongoose' );
-var paginate = require('paginate') ({
-  mongoose : mongoose
-});
+module.exports = function(app) {
+
+function NotFound(msg){
+  this.name = 'NotFound';
+  Error.call(this, msg);
+  Error.captureStackTrace(this, arguments.callee);
+} 
 
 var Plant    = require('../models/plant' );
 
@@ -127,23 +129,6 @@ app.get('/plants/destroy/:id', isLoggedIn, function ( req, res, next ){
   });
 });
 
-function validate(plant) {
-  var v = new Validator()
-    , errors = []
-    ;
-
-  v.error = function(msg) {
-    errors.push(msg);
-  };
-
-  v.check(plant.Family, 'Please enter the family').len(1, 50);
-  v.check(plant.Genus, 'Please enter the genus').len(1, 50);
-  v.check(plant.Species, 'Please enter the species').len(1, 50);
-  v.check(plant.Common_Name, 'Please enter the common name').len(1, 100);
-  //v.check(plant.origin, 'Please enter the origin or locale(s)').len(1, 100);
-
-  return errors;
-}
 
 };
 

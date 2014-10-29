@@ -31,7 +31,7 @@ var plantSchema = new Schema({
     updated_by  : String
 });
 
-var BASE_IMAGE_URI = "/images";
+var BASE_IMAGE_URI = '/images';
 
 // utility methods
 plantSchema.methods.getBotanicalName = function getBotanicalName() {

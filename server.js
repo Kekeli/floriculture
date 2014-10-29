@@ -18,8 +18,7 @@ var flash = require('connect-flash');
 var favicon = require('serve-favicon');
 var errorHandler = require('errorHandler');
 
-var db = require('./config/database');
-new db.startup();
+var db = require('./config/database').startup();
 
 // pass passport for configuration
 require('./config/passport')(passport); 
@@ -57,7 +56,7 @@ app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
-if ('development' == app.get('env')) {
+if ('development' === app.get('env')) {
   app.use(errorHandler({ dumpExceptions : true, showStack : true }));
   app.locals.pretty = true;
 }
@@ -77,7 +76,7 @@ app.locals.message = {};
 
 // Routes
 require('./app/routes/index.js')(app, passport); 
-require('./app/routes/plants.js')(app, passport); 
+require('./app/routes/plants.js')(app); 
 
 // Error handling
 app.all('*', function(req, res){

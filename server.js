@@ -18,7 +18,7 @@ var partials = require('express-partials');
 var passport = require('passport');
 var flash = require('connect-flash');
 var favicon = require('serve-favicon');
-var errorHandler = require('errorHandler');
+var errorHandler = require('errorhandler');
 
 var database = require('./config/database');
 

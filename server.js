@@ -24,17 +24,16 @@ var database = require('./config/database');
 
 // Makes connection asynchronously.  Mongoose will queue up database
 // operations and release them when the connection is complete.
-mongoose.connect(database.url, function (err) {
+mongoose.connect(database.url, function(err) {
   if (err) {
-  console.log ('ERROR connecting to: ' + database.url + '. ' + err);
+    console.log('ERROR connecting to: ' + database.url + '. ' + err);
   } else {
-  console.log ('Succeeded connected to: ' + database.url);
+    console.log('Succeeded connected to: ' + database.url);
   }
 });
 
-
 // pass passport for configuration
-require('./config/passport')(passport); 
+require('./config/passport')(passport);
 
 // load the express-partials middleware
 app.use(partials());
@@ -42,24 +41,24 @@ app.use(partials());
 // all environments
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(require('less-middleware')( path.join(__dirname, 'public') ));
-app.use(favicon(path.join(__dirname,'public','images','favicon.ico')));
+app.use(require('less-middleware')(path.join(__dirname, 'public')));
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.use(morgan('dev'));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({'extended':'true'})); 
-app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+app.use(bodyParser.urlencoded({'extended':'true'}));
+app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 app.use(methodOverride());
 
 app.use(cookieParser());
 app.use(session({
-  cookie: {maxAge: 60000}, 
+cookie: {maxAge: 60000},
   secret: 'some pig!',
   store: new mongoStore({
-        url: database.url,
-        collection : 'sessions'
-      })
+    url: database.url,
+    collection : 'sessions'
   })
+})
 );
 
 app.use(passport.initialize());
@@ -70,36 +69,35 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' === app.get('env')) {
-  app.use(errorHandler({ dumpExceptions : true, showStack : true }));
+  app.use(errorHandler({dumpExceptions : true, showStack : true}));
   app.locals.pretty = true;
 }
 
 // put user into res.locals for easy access from templates
 app.all('*', function(req, res, next) {
-  
+
   res.locals.user = req.user || null;
 
   next();
 });
-
 
 // Helpers
 app.locals.errors = {};
 app.locals.message = {};
 
 // Routes
-require('./app/routes/index.js')(app, passport); 
-require('./app/routes/plants.js')(app); 
+require('./app/routes/index.js')(app, passport);
+require('./app/routes/plants.js')(app);
 
 // Error handling
-app.all('*', function(req, res){
+app.all('*', function(req, res) {
   res.sendStatus(404);
 })
 
 // the meat and potatoes
-http.createServer(app).listen(port, function(){
-  console.log( 'Express server listening on port %d in %s mode', port, app.settings.env );
+http.createServer(app).listen(port, function() {
+  console.log('Listening on port %d in %s mode', port, app.settings.env);
 });
 
-// expose app           
+// expose app
 exports = module.exports = app;

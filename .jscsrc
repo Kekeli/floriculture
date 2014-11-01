@@ -1,7 +1,8 @@
 {
     "excludeFiles": [
         "node_modules/**",
-        "coverage"
+        "coverage",
+        "public/"
     ],
     "requireCurlyBraces": [
         "if",
@@ -13,19 +14,19 @@
         "catch"
     ],
     "requireOperatorBeforeLineBreak": true,
-    "requireCamelCaseOrUpperCaseIdentifiers": true,
+    "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
     "maximumLineLength": {
         "value": 80,
         "allowComments": true,
         "allowRegex": true
     },
-    "validateIndentation": 4,
+    "validateIndentation": 2,
     "validateQuoteMarks": "'",
     "disallowMultipleLineStrings": true,
     "disallowMixedSpacesAndTabs": true,
     "disallowTrailingWhitespace": true,
     "disallowSpaceAfterPrefixUnaryOperators": true,
-    "requireMultipleVarDecl": "onevar",
+    
     "requireSpaceAfterKeywords": [
         "if",
         "else",

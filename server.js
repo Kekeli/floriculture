@@ -85,9 +85,12 @@ app.all('*', function(req, res, next) {
 app.locals.errors = {};
 app.locals.message = {};
 
+var router = express.Router();
+app.use('/', router);
+
 // Routes
-require('./app/routes/index.js')(app, passport);
-require('./app/routes/plants.js')(app);
+require('./app/routes/routes.js')(app, passport);
+// require('./app/routes/plants.js')(app);
 
 // Error handling
 app.all('*', function(req, res) {

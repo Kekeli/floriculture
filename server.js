@@ -85,15 +85,13 @@ app.all('*', function(req, res, next) {
 app.locals.errors = {};
 app.locals.message = {};
 
-var router = express.Router();
+// Routes
+var router = require('./app/routes/index.js');
+
 app.use('/', router);
 
-// Routes
-require('./app/routes/routes.js')(app, passport);
-// require('./app/routes/plants.js')(app);
-
 // Error handling
-app.all('*', function(req, res) {
+router.all('*', function(req, res) {
   res.sendStatus(404);
 })
 

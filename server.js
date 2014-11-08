@@ -52,7 +52,9 @@ app.use(methodOverride());
 
 app.use(cookieParser());
 app.use(session({
-cookie: {maxAge: 60000},
+  cookie: {maxAge: 60000},
+  resave: true,
+  saveUninitialized: true,
   secret: 'some pig!',
   store: new mongoStore({
     url: database.url,

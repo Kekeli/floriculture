@@ -86,11 +86,12 @@ app.locals.errors = {};
 app.locals.message = {};
 
 // Routes
-require('./app/routes/index.js')(app, passport);
-require('./app/routes/plants.js')(app);
+var router = require('./app/routes/index.js');
+
+app.use('/', router);
 
 // Error handling
-app.all('*', function(req, res) {
+router.all('*', function(req, res) {
   res.sendStatus(404);
 })
 

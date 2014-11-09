@@ -7,8 +7,8 @@ var paginate = require('paginate') ({
 });
 
 var express = require('express'),
-  router = express.Router();
-var passport = require('passport');
+  router = express.Router(),
+  passport = require('passport');
 
 // =====================================
 // HOME PAGE (with login links) ========
@@ -92,7 +92,7 @@ router.get('/about', function(req, res) {
   });
 });
 
-var Plant    = require('../models/plant');
+var Plant = require('../models/plant');
 
 router.get('/plants', function(req, res, next) {
 

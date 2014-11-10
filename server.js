@@ -2,7 +2,8 @@
 var express = require('express');
 var app = express();
 
-var port = process.env.PORT || 3000;
+var Config = require('./config/config');
+var config = new Config();
 
 var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -20,15 +21,15 @@ var flash = require('connect-flash');
 var favicon = require('serve-favicon');
 var errorHandler = require('errorhandler');
 
-var database = require('./config/database');
+var port = process.env.PORT || 3000;
 
 // Makes connection asynchronously.  Mongoose will queue up database
 // operations and release them when the connection is complete.
-mongoose.connect(database.url, function(err) {
+mongoose.connect(config.database.url, function(err) {
   if (err) {
-    console.log('ERROR connecting to: ' + database.url + '. ' + err);
+    console.log('ERROR connecting to: ' + config.database.url + '. ' + err);
   } else {
-    console.log('Succeeded connected to: ' + database.url);
+    console.log('Succeeded connected to: ' + config.database.url);
   }
 });
 
@@ -57,7 +58,7 @@ app.use(session({
   saveUninitialized: true,
   secret: 'some pig!',
   store: new mongoStore({
-    url: database.url,
+    url: config.database.url,
     collection : 'sessions'
   })
 })
@@ -79,7 +80,6 @@ if ('development' === app.get('env')) {
 app.all('*', function(req, res, next) {
 
   res.locals.user = req.user || null;
-
   next();
 });
 

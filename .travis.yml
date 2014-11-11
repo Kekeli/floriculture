@@ -5,3 +5,5 @@ services: mongodb
 env:
   global:
     - NODE_ENV=test
+	- secure: "KqDJZRBKbpUOpW/J2ZSpB9NMD5S8RrCgLw8NWeD3+e906I6vOCEqXtE0OurvSSOJ1GtvjGGJ9tO1Vatpcdycg5n51bEsuUyf2eY4EF0m57cp9BYJQeuDf9997W5zh1QWoARXqrB/4r5FENntZJm8rFCbKd+ukiNbDa2GKku5ECk="
+after_success: npm run codeclimate

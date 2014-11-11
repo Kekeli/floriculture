@@ -6,7 +6,7 @@ var production = {
   },
   database: {
     url : 'mongodb://localhost/greenhouse'
-   }
+  }
 };
 var development = {
   app: {
@@ -33,6 +33,7 @@ module.exports = function() {
     case 'test':
       return test;
     case 'development':
+      return development;
     default:
       return development;
   }

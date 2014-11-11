@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "lint": "./node_modules/.bin/jshint ./test server.js ./app/models ./app/routes",
+    "lint": "./node_modules/.bin/jshint server.js ./config ./test ./app/models ./app/routes",
     "checkStyle": "./node_modules/.bin/jscs .",
     "pretest": "npm run-script lint && npm run-script checkStyle",
     "test": "node test/run",

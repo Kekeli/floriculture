@@ -1,4 +1,4 @@
-// plants.js
+// index.js
 'use strict';
 
 var mongoose = require('mongoose');
@@ -9,6 +9,9 @@ var paginate = require('paginate') ({
 var express = require('express'),
   router = express.Router();
 var passport = require('passport');
+
+var util = require('util');
+var fs = require('fs');
 
 // =====================================
 // HOME PAGE (with login links) ========
@@ -217,6 +220,29 @@ router.get('/plants/destroy/:id', isLoggedIn, function(req, res, next) {
       res.redirect('/plants');
     });
   });
+});
+
+// =====================================
+// UPLOADS =============================
+// =====================================
+router.get('/', function(req, res) {
+  res.render('uploads', {title: 'I love files!'});
+});
+
+router.post('/uploads', function(req, res, next) {
+  if (req.files) {
+    console.log(util.inspect(req.files));
+    if (req.files.myFile.size === 0) {
+      return next(new Error('Hey, first would you select a file?'));
+    }
+    fs.exists(req.files.myFile.path, function(exists) {
+      if (exists) {
+        res.end('Got your file!');
+      } else {
+        res.end('Well, there is no magic for those who don’t believe in it!');
+      }
+    });
+  }
 });
 
 module.exports = router

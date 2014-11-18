@@ -20,6 +20,7 @@ var passport = require('passport');
 var flash = require('connect-flash');
 var favicon = require('serve-favicon');
 var errorHandler = require('errorhandler');
+var multer = require('multer');
 
 var port = process.env.PORT || 3000;
 
@@ -53,6 +54,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 app.use(methodOverride());
+app.use(multer({
+  dest: './uploads/'
+}));
 
 app.use(cookieParser());
 app.use(session({

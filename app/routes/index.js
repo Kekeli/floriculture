@@ -225,19 +225,39 @@ router.get('/plants/destroy/:id', isLoggedIn, function(req, res, next) {
 // =====================================
 // UPLOADS =============================
 // =====================================
-router.get('/', function(req, res) {
+router.get('/uploads', function(req, res) {
   res.render('uploads', {title: 'I love files!'});
 });
 
 router.post('/uploads', function(req, res, next) {
+
+  if (req.body) {
+    console.log(req.body);
+    // todo: use family name for folder
+    // below make subfolder as needed
+  }
+
   if (req.files) {
     console.log(util.inspect(req.files));
-    if (req.files.myFile.size === 0) {
+    if (req.files.plantImage.size === 0) {
       return next(new Error('Hey, first would you select a file?'));
     }
-    fs.exists(req.files.myFile.path, function(exists) {
+    var tmpPath = req.files.plantImage.path;
+    fs.exists(tmpPath, function(exists) {
       if (exists) {
-        res.end('Got your file!');
+        var targetPath = './public/uploads/' +
+          req.files.plantImage.name;
+        console.log(targetPath)
+        fs.rename(tmpPath, targetPath, function(err) {
+          if (err) { next(err); }
+
+          fs.unlink(tmpPath, function() {
+            if (err) { next(err); }
+            res.send('File uploaded to: ' + targetPath +
+              ' - ' + req.files.plantImage.size + ' bytes');
+          });
+
+        });
       } else {
         res.end('Well, there is no magic for those who don’t believe in it!');
       }

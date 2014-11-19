@@ -50,8 +50,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 app.use(methodOverride());
+
+var done = false;
 app.use(multer({
-  dest: './uploads/'
+  dest: __dirname + '/uploads/',
+  limits: {
+    fileSize: 1000 * 1024
+  },
+  onFileUploadStart: function(file) {
+    console.log(file.originalname + ' is starting ...')
+  },
+  onFileUploadComplete: function(file) {
+    console.log(file.fieldname + ' uploaded to  ' + file.path)
+    done = true;
+  }
 }));
 
 app.use(cookieParser());
@@ -72,6 +84,7 @@ app.use(passport.session());
 app.use(flash());
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 // development only
 if ('development' === app.get('env')) {

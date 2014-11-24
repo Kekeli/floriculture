@@ -11,7 +11,8 @@ var express = require('express'),
 var passport = require('passport');
 
 var util = require('util');
-var fs = require('fs');
+var fs = require('fs-extra');
+var path = require('path');
 
 // =====================================
 // HOME PAGE (with login links) ========
@@ -240,16 +241,23 @@ router.post('/uploads', function(req, res, next) {
   if (req.files) {
     console.log(util.inspect(req.files));
     if (req.files.plantImage.size === 0) {
-      return next(new Error('Hey, first would you select a file?'));
+      return next(new Error('Please first select a file?'));
     }
+
+    var subFolder =  './public/uploads/' + 'Family';
     var tmpPath = req.files.plantImage.path;
     fs.exists(tmpPath, function(exists) {
       if (exists) {
-        var targetPath = './public/uploads/' +
-          req.files.plantImage.name;
+
+        // ensure the target folder exists
+        fs.ensureDirSync(subFolder, function(err) {
+          console.log(err)
+        })
+
+        var targetPath = subFolder + path.sep + req.files.plantImage.name;
         console.log(targetPath)
         fs.rename(tmpPath, targetPath, function(err) {
-          if (err) { next(err); }
+          if (err) { console.log(err) }
 
           fs.unlink(tmpPath, function() {
             if (err) { next(err); }
@@ -259,7 +267,7 @@ router.post('/uploads', function(req, res, next) {
 
         });
       } else {
-        res.end('Well, there is no magic for those who don’t believe in it!');
+        res.end('Bad request: uploaded file not found');
       }
     });
   }

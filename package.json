@@ -3,9 +3,9 @@
   "main": "server.js",
   "version": "0.5.0",
   "private": true,
-  "repository" : { 
-    "type" : "git",
-    "url" : "http://github.com/kekeli/floriculture.git"
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/kekeli/floriculture.git"
   },
   "scripts": {
     "start": "node server.js",
@@ -17,17 +17,18 @@
     "codeclimate": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly && cat ./coverage/lcov.info | ./node_modules/.bin/codeclimate && rm -rf ./coverage"
   },
   "dependencies": {
-    "bcrypt-nodejs" : "latest",
+    "bcrypt-nodejs": "latest",
     "body-parser": "^1.9.0",
     "connect-flash": "latest",
     "connect-mongo": "latest",
     "cookie-parser": "^1.3.0",
+    "ejs": "^1.0.0",
     "errorhandler": "^1.2.0",
     "express": "^4.0.0",
     "express-partials": "*",
     "express-session": "^1.9.0",
     "express-validator": "*",
-    "ejs": "^1.0.0",
+    "fs-extra": "^0.12.0",
     "less-middleware": "*",
     "method-override": "^2.3.0",
     "mongoose": "^3.8.18",

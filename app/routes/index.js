@@ -232,10 +232,14 @@ router.get('/uploads', function(req, res) {
 
 router.post('/uploads', function(req, res, next) {
 
+  var familyDir = 'Family';
+  var imageName = '';
+
   if (req.body) {
     console.log(req.body);
-    // todo: use family name for folder
-    // below make subfolder as needed
+    // todo: use validation
+    familyDir = req.body.familyName;
+    imageName = req.body.imageName;
   }
 
   if (req.files) {
@@ -244,7 +248,7 @@ router.post('/uploads', function(req, res, next) {
       return next(new Error('Please first select a file?'));
     }
 
-    var subFolder =  './public/uploads/' + 'Family';
+    var subFolder =  './public/uploads/' + familyDir;
     var tmpPath = req.files.plantImage.path;
     fs.exists(tmpPath, function(exists) {
       if (exists) {
@@ -254,7 +258,8 @@ router.post('/uploads', function(req, res, next) {
           console.log(err)
         })
 
-        var targetPath = subFolder + path.sep + req.files.plantImage.name;
+        var targetPath = subFolder + path.sep +
+          imageName + path.extname(tmpPath);
         console.log(targetPath)
         fs.rename(tmpPath, targetPath, function(err) {
           if (err) { console.log(err) }

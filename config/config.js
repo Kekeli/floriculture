@@ -1,15 +1,11 @@
 'use strict';
 
-var uristring =
-process.env.MONGOLAB_URI ||
-process.env.MONGOHQ_URL;
-
 var production = {
   app: {
     name: 'Rutger\'s Floriculture Greenhouse'
   },
   database: {
-    url : uristring || 'mongodb://localhost/greenhouse'
+    url : 'mongodb://localhost/greenhouse'
   }
 };
 var development = {
@@ -17,7 +13,7 @@ var development = {
     name: 'Floriculture - Development'
   },
   database: {
-    url : uristring || 'mongodb://localhost/greenhouse'
+    url : 'mongodb://localhost/greenhouse'
   },
   debug: 'true',
 };
@@ -26,7 +22,7 @@ var test = {
     name: 'Floriculture - Test'
   },
   database: {
-    url : uristring || 'mongodb://localhost/greenhouse_test'
+    url : 'mongodb://localhost/greenhouse_test'
   }
 };
 

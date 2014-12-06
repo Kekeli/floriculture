@@ -23,13 +23,16 @@ var errorHandler = require('errorhandler');
 
 var port = process.env.PORT || 3000;
 
+var dbUrl = process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL || config.database.url;
+
 // Makes connection asynchronously.  Mongoose will queue up database
 // operations and release them when the connection is complete.
-mongoose.connect(config.database.url, function(err) {
+mongoose.connect(dbUrl, function(err) {
   if (err) {
-    console.log('ERROR connecting to: ' + config.database.url + '. ' + err);
+    console.log('ERROR connecting to: ' + dbUrl + '. ' + err);
   } else {
-    console.log('Succeeded connected to: ' + config.database.url);
+    console.log('Succeeded connected to: ' + dbUrl);
   }
 });
 
@@ -58,7 +61,7 @@ app.use(session({
   saveUninitialized: true,
   secret: 'some pig!',
   store: new mongoStore({
-    url: config.database.url,
+    url: dbUrl,
     collection : 'sessions'
   })
 })

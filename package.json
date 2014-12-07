@@ -9,11 +9,12 @@
   },
   "scripts": {
     "start": "node server.js",
-    "lint": "./node_modules/.bin/jshint ./test server.js ./app/models ./app/routes",
+    "lint": "./node_modules/.bin/jshint server.js ./config ./test ./app/models ./app/routes",
     "checkStyle": "./node_modules/.bin/jscs .",
     "pretest": "npm run-script lint && npm run-script checkStyle",
     "test": "node test/run",
-    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --"
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --",
+    "codeclimate": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly && cat ./coverage/lcov.info | ./node_modules/.bin/codeclimate && rm -rf ./coverage"
   },
   "dependencies": {
     "bcrypt-nodejs" : "latest",
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "chai": "^1.9.2",
+    "codeclimate-test-reporter": "0.0.4",
     "istanbul": "^0.3.2",
     "jscs": "^1.7.3",
     "jshint": "^2.5.6",
@@ -46,7 +48,7 @@
     "nodemon": "^1.2.1",
     "rewire": "^2.1.0",
     "sinon": "^1.10.3",
-    "supertest": "^0.14.0"
+    "supertest": "^0.15.0"
   },
   "keywords": [
     "node.js",

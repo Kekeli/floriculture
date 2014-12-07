@@ -7,8 +7,8 @@ var paginate = require('paginate') ({
 });
 
 var express = require('express'),
-  router = express.Router();
-var passport = require('passport');
+  router = express.Router(),
+  passport = require('passport');
 
 // =====================================
 // HOME PAGE (with login links) ========
@@ -30,7 +30,8 @@ router.get('/login', function(req, res) {
   res.render('login', {
     title : 'Please log on',
     user : req.user,
-    message : req.flash('loginMessage')});
+    message : req.flash('loginMessage')
+  });
 });
 
 // process the login form
@@ -39,7 +40,8 @@ router.post('/login',
     successRedirect : '/profile', // redirect to the secure profile section
     failureRedirect : '/login', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages
-}));
+  })
+);
 
 // =====================================
 // SIGNUP ==============================
@@ -92,7 +94,7 @@ router.get('/about', function(req, res) {
   });
 });
 
-var Plant    = require('../models/plant');
+var Plant = require('../models/plant');
 
 router.get('/plants', function(req, res, next) {
 

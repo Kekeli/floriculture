@@ -181,7 +181,7 @@ router.get('/plants/:id', function(req, res, next) {
     res.render('plant', {
       title : 'Show me the plant!',
       plant : plant,
-      current : req.params.id
+      current : id
     });
   });
 });

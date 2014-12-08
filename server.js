@@ -113,9 +113,9 @@ var router = require('./app/routes/index.js');
 app.use('/', router);
 
 // Error handling
-router.all('*', function(req, res) {
-  res.sendStatus(404);
-})
+// router.all('*', function(req, res) {
+//   res.sendStatus(404);
+// })
 
 // the meat and potatoes
 http.createServer(app).listen(port, function() {

@@ -32,7 +32,7 @@ var plantSchema = new Schema({
     updated_by  : String
 });
 
-var BASE_IMAGE_URI = '../../public/uploads/';
+var BASE_IMAGE_URI = 'uploads';
 
 // utility methods
 plantSchema.methods.getBotanicalName = function getBotanicalName() {
@@ -44,6 +44,8 @@ plantSchema.methods.getImageName = function getImageName() {
 };
 
 plantSchema.methods.getImageUrl = function getImageUrl() {
+  var url = BASE_IMAGE_URI + '/' + this.Family + '/' + this.getImageName();
+  console.log(url);
   return BASE_IMAGE_URI + '/' + this.Family + '/' + this.getImageName();
 };
 

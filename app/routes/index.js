@@ -147,9 +147,11 @@ router.get('/plants/edit/:id', isLoggedIn, function(req, res, next) {
 router.post('/plants', function(req, res, next) {
 
   // todo: hook up validator
-  if (!req.body || !req.body.botanical_name) {
+  if (!req.body || !req.body.Family) {
     return next(new Error('No data provided.'));
   }
+
+  console.log(req.body);
 
   new Plant(req.body)
   .save(function(err, plant) {
@@ -229,7 +231,12 @@ router.get('/plants/destroy/:id', isLoggedIn, function(req, res, next) {
 // UPLOADS =============================
 // =====================================
 router.get('/uploads', function(req, res) {
-  res.render('uploads', {title: 'I love files!'});
+  console.log(req.query);
+  res.render('uploads', {
+    title: 'I love files!',
+    familyName : req.query.f,
+    imageName : req.query.n
+  });
 });
 
 router.post('/uploads', function(req, res, next) {

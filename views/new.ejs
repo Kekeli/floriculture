@@ -1,18 +1,19 @@
-<form action="/plants" method="post" accept-charset="utf-8">
-	<div class="item-new">
-		
-		<label for="Family">Family: </label><input class="input" type="text" name="Family"/>
-		<label for="Genus">Genus: </label><input class="input" type="text" name="Genus" />
-		<label for="Species">Species: </label><input class="input" type="text" name="Species"/>
-		<label for="Subspecies">Subspecies: </label><input class="input" type="text" name="Subspecies"/>
-		<label for="Variety">Variety: </label><input class="input" type="text" name="Variety"/>
-		<label for="Common_Name">Common Name: </label> <input class="input" type="text" name="Common_Name"/>
-		<label for="Section">Section: </label><input class="input" type="text" name="Section" />
-		<label for="Bench">Bench: </label><input class="input" type="text" name="Bench" />
-		<label for="origin">Origin: </label><input class="input" type="text" name="origin" />
-		<label for="comments">Comments: </label><input class="input" type="text" name="comments" />
-		<label for="image_url">Image url: </label><input class="input-xxlarge" type="text" name="image_url" />
-
+<form action="/plants" method="post" accept-charset="utf-8" class="form-horizontal">
+	<div class="row">
+		<div class="span6">
+			<label for="Family">Family: </label><input class="input" type="text" name="Family"/>
+			<label for="Genus">Genus: </label><input class="input" type="text" name="Genus" />
+			<label for="Species">Species: </label><input class="input" type="text" name="Species"/>
+			<label for="Subspecies">Subspecies: </label><input class="input" type="text" name="Subspecies"/>
+			<label for="Variety">Variety: </label><input class="input" type="text" name="Variety"/>
+		</div>
+		<div class="span6">
+			<label for="Common_Name">Common Name: </label> <input class="input" type="text" name="Common_Name"/>
+			<label for="Section">Section: </label><input class="input" type="text" name="Section" />
+			<label for="Bench">Bench: </label><input class="input" type="text" name="Bench" />
+			<label for="origin">Origin: </label><input class="input" type="text" name="origin" />
+			<label for="comments">Comments: </label><input class="input" type="text" name="comments" />
+		</div>
 		<br />
 		<input type="submit" class="btn btn-small btn-primary" value="Save" id="btnSend" />
 	</div>

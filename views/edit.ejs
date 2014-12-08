@@ -1,9 +1,8 @@
 
   <form action="/plants/<%= p._id %>" method="post" accept-charset="utf-8">
+    <input type="hidden" name="_id" value="<%= p._id %>">
+    <input type="hidden" name="_method" value="PUT">
     <div class="row">
-      <input type="hidden" name="_id" value="<%= p._id %>">
-      <input type="hidden" name="_method" value="PUT">
-      
       <div class="span6">
         <label for="Family">Family: </label><input class="input" type="text" name="Family" value="<%= p.Family %>"/>
         <label for="Genus">Genus: </label><input class="input" type="text" name="Genus" value="<%= p.Genus %>"/>

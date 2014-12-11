@@ -55,7 +55,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json({type: 'application/vnd.api+json'}));
-app.use(methodOverride(function(req, res){
+app.use(methodOverride(function(req) {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
     // look in urlencoded POST bodies and delete it
     var method = req.body._method
@@ -107,7 +107,6 @@ if ('development' === app.get('env')) {
 
 // put user into res.locals for easy access from templates
 app.all('*', function(req, res, next) {
-
   res.locals.user = req.user || null;
   next();
 });
@@ -120,11 +119,6 @@ app.locals.message = {};
 var router = require('./app/routes/index.js');
 
 app.use('/', router);
-
-// Error handling
-// router.all('*', function(req, res) {
-//   res.sendStatus(404);
-// })
 
 // the meat and potatoes
 http.createServer(app).listen(port, function() {

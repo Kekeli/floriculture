@@ -20,11 +20,14 @@ var passport = require('passport');
 var flash = require('connect-flash');
 var favicon = require('serve-favicon');
 var errorHandler = require('errorhandler');
+var multer = require('multer');
 
 var port = process.env.PORT || 3000;
 
 var dbUrl = process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL || config.database.url;
+
+var sessionSecret = process.env.SESSION_SECRET || 'some pig!';
 
 // Makes connection asynchronously.  Mongoose will queue up database
 // operations and release them when the connection is complete.
@@ -52,14 +55,36 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json({type: 'application/vnd.api+json'}));
-app.use(methodOverride());
+app.use(methodOverride(function(req) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    var method = req.body._method
+    delete req.body._method
+    return method
+  }
+}));
+
+var done = false;
+app.use(multer({
+  dest: __dirname + '/uploads/',
+  limits: {
+    fileSize: 1000 * 1024
+  },
+  onFileUploadStart: function(file) {
+    console.log(file.originalname + ' is starting ...')
+  },
+  onFileUploadComplete: function(file) {
+    console.log(file.fieldname + ' uploaded to  ' + file.path)
+    done = true;
+  }
+}));
 
 app.use(cookieParser());
 app.use(session({
   cookie: {maxAge: 60000},
   resave: true,
   saveUninitialized: true,
-  secret: 'some pig!',
+  secret: sessionSecret,
   store: new mongoStore({
     url: dbUrl,
     collection : 'sessions'
@@ -72,6 +97,7 @@ app.use(passport.session());
 app.use(flash());
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 // development only
 if ('development' === app.get('env')) {
@@ -81,7 +107,6 @@ if ('development' === app.get('env')) {
 
 // put user into res.locals for easy access from templates
 app.all('*', function(req, res, next) {
-
   res.locals.user = req.user || null;
   next();
 });
@@ -94,11 +119,6 @@ app.locals.message = {};
 var router = require('./app/routes/index.js');
 
 app.use('/', router);
-
-// Error handling
-router.all('*', function(req, res) {
-  res.sendStatus(404);
-})
 
 // the meat and potatoes
 http.createServer(app).listen(port, function() {

@@ -1,0 +1,10 @@
+<form action="/uploads" method="post" enctype="multipart/form-data">
+
+	<label for="familyName">Family: </label><input class="input" type="text" name="familyName" value="<%= familyName %>"/>
+	<label for="imageName">Image name: </label>
+		<input class="input" type="filename" name="imageName" value="<%= imageName %>"/>
+
+	<label for="plantImage">Choose image to upload: </label>
+		<input class="input" type="file" name="plantImage" accept="image/*"/>
+	<button type="submit" class="btn btn-warning btn-lg">Submit</button>
+</form>

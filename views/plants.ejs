@@ -10,7 +10,7 @@
 		<tbody>
 			<% plants.forEach( function ( plant ){ %>
 				<tr>
-					<td><a class="update-link" href="/plants/<%= plant._id %>" title="Display this plant"><img src="<%= plant.getImageUrl() %>" height="40" width="30"/></a></td>
+					<td><a class="update-link" href="/plants/<%= plant._id %>" title="Display this plant"><img src="/<%= plant.getImageUrl() %>" height="40" width="30"/></a></td>
 					<td><%= plant.Family %></td>
 					<td><%= plant.Genus ? plant.Genus : '' %></td>
 					<td><%= plant.Species ? plant.Species : '' %></td>

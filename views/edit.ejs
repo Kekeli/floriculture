@@ -1,23 +1,23 @@
 
-
   <form action="/plants/<%= p._id %>" method="post" accept-charset="utf-8">
-  	<input type="hidden" name="_id" value="<%= p._id %>">
-  	<input type="hidden" name="_method" value="PUT">
-    <div class="item-new">
-		<label for="Family">Family: </label><input class="input" type="text" name="Family" value="<%= p.Family %>"/>
-		<label for="Genus">Genus: </label><input class="input" type="text" name="Genus" value="<%= p.Genus %>"/>
-		<label for="Species">Species: </label><input class="input" type="text" name="Species" value="<%= p.Species %>"/>
-		<label for="Subspecies">Subspecies: </label><input class="input" type="text" name="Subspecies" value="<%= p.Subspecies %>"/>
-		<label for="Variety">Variety: </label><input class="input" type="text" name="Variety" value="<%= p.Variety %>"/>
-		<label for="Common_Name">Common Name: </label> <input class="input" type="text" name="Common_Name" value="<%= p.Common_Name %>" />
-		<label for="Section">Section: </label><input class="input" type="text" name="Section" value="<%= p.Section %>"/>
-		<label for="Bench">Bench: </label><input class="input" type="text" name="Bench" value="<%= p.Bench %>"/>
-		<label for="origin">Origin: </label><input class="input" type="text" name="origin" value="<%= p.origin %>" />
-		<label for="comments">Comments: </label><input class="input" type="text" name="comments" value="<%= p.comments %>" />
-		<label for="image_url">Image url: </label><input class="input-xxlarge" type="text" name="image_url" value="<%= p.image_url %>" />
-
-		<br />
-		<input type="submit" class="btn btn-small btn-primary" value="Save" id="btnSend" />
-	</div>
+    <input type="hidden" name="_id" value="<%= p._id %>">
+    <input type="hidden" name="_method" value="PUT">
+    <div class="row">
+      <div class="span6">
+        <label for="Family">Family: </label><input class="input" type="text" name="Family" value="<%= p.Family %>"/>
+        <label for="Genus">Genus: </label><input class="input" type="text" name="Genus" value="<%= p.Genus %>"/>
+        <label for="Species">Species: </label><input class="input" type="text" name="Species" value="<%= p.Species %>"/>
+        <label for="Subspecies">Subspecies: </label><input class="input" type="text" name="Subspecies" value="<%= p.Subspecies %>"/>
+        <label for="Variety">Variety: </label><input class="input" type="text" name="Variety" value="<%= p.Variety %>"/>
+      </div>
+      <div class="span6">
+        <label for="Section">Section: </label><input class="input" type="text" name="Section" value="<%= p.Section %>"/>
+        <label for="Bench">Bench: </label><input class="input" type="text" name="Bench" value="<%= p.Bench %>"/>
+        <label for="origin">Origin: </label><input class="input" type="text" name="origin" value="<%= p.origin %>" />
+        <label for="comments">Comments: </label><input class="input" type="text" name="comments" value="<%= p.comments %>" />
+        <label for="image_url">Image url: </label><input class="input-xxlarge" type="text" name="image_url" value="<%= p.image_url %>" />
+      </div>
+      <br />
+      <input type="submit" class="btn btn-small btn-primary" value="Save" id="btnSend" />
+    </div>
   </form>
-

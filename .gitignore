@@ -1,20 +1,15 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+# Logs
+logs
+*.log
 
-# Thumbnails
-._*
+# Coverage directory used by tools like istanbul
+coverage
 
-.DS_Store
+# Dependencies directory
 node_modules
 
-*.sock
-
-.sass-cache
-sass
-config.rb
-
-.project
-.settings/
-coverage/
-npm-debug.log
+# OS generated files #
+Thumbs.db
+ehthumbs.db
+._*
+.DS_Store

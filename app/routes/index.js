@@ -1,4 +1,4 @@
-// plants.js
+// index.js
 'use strict';
 
 var mongoose = require('mongoose');
@@ -9,6 +9,10 @@ var paginate = require('paginate') ({
 var express = require('express'),
   router = express.Router(),
   passport = require('passport');
+
+var util = require('util');
+var fs = require('fs-extra');
+var path = require('path');
 
 // =====================================
 // HOME PAGE (with login links) ========
@@ -116,7 +120,8 @@ router.get('/plants', function(req, res, next) {
 
 router.get('/plants/new', isLoggedIn, function(req, res) {
   res.render('new', {
-    title : 'Add a plant!'
+    title : 'Add a plant!',
+    user : req.user
   });
 });
 
@@ -143,9 +148,11 @@ router.get('/plants/edit/:id', isLoggedIn, function(req, res, next) {
 router.post('/plants', function(req, res, next) {
 
   // todo: hook up validator
-  if (!req.body || !req.body.botanical_name) {
+  if (!req.body || !req.body.Family) {
     return next(new Error('No data provided.'));
   }
+
+  console.log(req.body);
 
   new Plant(req.body)
   .save(function(err, plant) {
@@ -175,7 +182,8 @@ router.get('/plants/:id', function(req, res, next) {
     res.render('plant', {
       title : 'Show me the plant!',
       plant : plant,
-      current : req.params.id
+      current : id,
+      user : req.user
     });
   });
 });
@@ -219,6 +227,72 @@ router.get('/plants/destroy/:id', isLoggedIn, function(req, res, next) {
       res.redirect('/plants');
     });
   });
+});
+
+// =====================================
+// UPLOADS =============================
+// =====================================
+router.get('/uploads', isLoggedIn, function(req, res) {
+  console.log(req.query);
+  res.render('uploads', {
+    title: 'Set plant image',
+    familyName : req.query.f,
+    imageName : req.query.n,
+    user : req.user
+  });
+});
+
+router.post('/uploads', function(req, res, next) {
+
+  var familyDir = 'Family';
+  var imageName = '';
+
+  if (req.body) {
+    console.log(req.body);
+    // todo: use validation
+    familyDir = req.body.familyName;
+    imageName = req.body.imageName;
+  }
+
+  if (req.files) {
+    console.log(util.inspect(req.files));
+    if (req.files.plantImage.size === 0) {
+      return next(new Error('Please first select a file?'));
+    }
+
+    var subFolder =  './public/uploads/' + familyDir;
+    var tmpPath = req.files.plantImage.path;
+    fs.exists(tmpPath, function(exists) {
+      if (exists) {
+
+        // ensure the target folder exists
+        fs.ensureDirSync(subFolder, function(err) {
+          console.log(err)
+        })
+
+        // todo: assumes png!
+        var targetPath = subFolder + path.sep +
+          imageName; //+ path.extname(tmpPath);
+        console.log(targetPath)
+        fs.rename(tmpPath, targetPath, function(err) {
+          if (err) { console.log(err) }
+
+          fs.unlink(tmpPath, function() {
+            if (err) { next(err); }
+
+            console.log('File uploaded to: ' + targetPath +
+              ' - ' + req.files.plantImage.size + ' bytes');
+
+            // todo: return to specific plant view
+            res.redirect('/plants');
+          });
+
+        });
+      } else {
+        res.end('Bad request: uploaded file not found');
+      }
+    });
+  }
 });
 
 module.exports = router

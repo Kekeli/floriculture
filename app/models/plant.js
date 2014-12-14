@@ -1,12 +1,10 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema,
-  ObjectId = Schema.ObjectId;
+var mongoose = require('mongoose'),
+  Schema = mongoose.Schema;
 
 // specify the schema for each member of the plants collection
 var plantSchema = new Schema({
-    _id   : ObjectId,
     Family : String,
     Genus : String,
     Species : String,
@@ -32,17 +30,19 @@ var plantSchema = new Schema({
     updated_by  : String
 });
 
-var BASE_IMAGE_URI = '/images';
+var BASE_IMAGE_URI = process.env.BASE_IMAGE_URI || 'uploads';
 
 // utility methods
 plantSchema.methods.getBotanicalName = function getBotanicalName() {
   return this.Family + ' ' + this.Genus;
 };
 
+plantSchema.methods.getImageName = function getImageName() {
+  return this.Genus + '_' + this.Species + '.png';
+};
+
 plantSchema.methods.getImageUrl = function getImageUrl() {
-//if (this.image_url)
-  return BASE_IMAGE_URI + '/' + this.Family + '/' + this.image_url;
-//return BASE_IMAGE_URI + '/' + '404error.gif';
+  return BASE_IMAGE_URI + '/' + this.Family + '/' + this.getImageName();
 };
 
 plantSchema.methods.getLocation = function getLocation() {

@@ -120,7 +120,8 @@ router.get('/plants', function(req, res, next) {
 
 router.get('/plants/new', isLoggedIn, function(req, res) {
   res.render('new', {
-    title : 'Add a plant!'
+    title : 'Add a plant!',
+    user : req.user
   });
 });
 
@@ -181,7 +182,8 @@ router.get('/plants/:id', function(req, res, next) {
     res.render('plant', {
       title : 'Show me the plant!',
       plant : plant,
-      current : id
+      current : id,
+      user : req.user
     });
   });
 });
@@ -230,12 +232,13 @@ router.get('/plants/destroy/:id', isLoggedIn, function(req, res, next) {
 // =====================================
 // UPLOADS =============================
 // =====================================
-router.get('/uploads', function(req, res) {
+router.get('/uploads', isLoggedIn, function(req, res) {
   console.log(req.query);
   res.render('uploads', {
     title: 'I love files!',
     familyName : req.query.f,
-    imageName : req.query.n
+    imageName : req.query.n,
+    user : req.user
   });
 });
 
@@ -267,16 +270,21 @@ router.post('/uploads', function(req, res, next) {
           console.log(err)
         })
 
+        // todo: assumes png!
         var targetPath = subFolder + path.sep +
-          imageName + path.extname(tmpPath);
+          imageName; //+ path.extname(tmpPath);
         console.log(targetPath)
         fs.rename(tmpPath, targetPath, function(err) {
           if (err) { console.log(err) }
 
           fs.unlink(tmpPath, function() {
             if (err) { next(err); }
-            res.send('File uploaded to: ' + targetPath +
+            
+            console.log('File uploaded to: ' + targetPath +
               ' - ' + req.files.plantImage.size + ' bytes');
+
+            // todo: return to specific plant view
+            res.redirect('/plants');
           });
 
         });

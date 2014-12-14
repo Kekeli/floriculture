@@ -44,8 +44,6 @@ plantSchema.methods.getImageName = function getImageName() {
 };
 
 plantSchema.methods.getImageUrl = function getImageUrl() {
-  var url = BASE_IMAGE_URI + '/' + this.Family + '/' + this.getImageName();
-  console.log(url);
   return BASE_IMAGE_URI + '/' + this.Family + '/' + this.getImageName();
 };
 

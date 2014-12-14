@@ -235,7 +235,7 @@ router.get('/plants/destroy/:id', isLoggedIn, function(req, res, next) {
 router.get('/uploads', isLoggedIn, function(req, res) {
   console.log(req.query);
   res.render('uploads', {
-    title: 'I love files!',
+    title: 'Set plant image',
     familyName : req.query.f,
     imageName : req.query.n,
     user : req.user
@@ -279,7 +279,7 @@ router.post('/uploads', function(req, res, next) {
 
           fs.unlink(tmpPath, function() {
             if (err) { next(err); }
-            
+
             console.log('File uploaded to: ' + targetPath +
               ' - ' + req.files.plantImage.size + ' bytes');
 

@@ -131,7 +131,7 @@ router.get('/search/:term', function(req, res, next) {
     .paginate({page: req.query.page}, function(err, plants) {
 
       console.log(plants);
-      
+
       if (err) { return next(err); }
 
       res.render('plants', {
@@ -140,7 +140,7 @@ router.get('/search/:term', function(req, res, next) {
         user : req.user,
         baseUrl : '/search/' + req.params.term
       });
-  });
+    });
 })
 
 router.get('/plants/new', isLoggedIn, function(req, res) {

@@ -1,6 +1,11 @@
 
-<div id="list">
-	
+<div class=row>
+	<!-- todo: display only for editor roles -->
+	<a class="btn btn-small btn-primary pull-left" href="/plants/new" disabled="true">Add a plant!</a>
+	<input type="text" name="typeahead" class="typeahead tt-query pull-right" autocomplete="off" spellcheck="false" placeholder="Search">
+</div>
+
+<div id="list" class="row">
 	<table class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
@@ -29,9 +34,6 @@
 		</tbody>
 	</table>
 	
-	<%- plants.pagination.render({ baseUrl: '/plants' }) %>
+	<%- plants.pagination.render({ baseUrl: baseUrl }) %>
 
-	<!-- todo: display only for editor roles -->
-	<a class="btn btn-small btn-primary pull-right" href="/plants/new" disabled="true">Add</a>
-	<br />
 </div>

@@ -113,10 +113,36 @@ router.get('/plants', function(req, res, next) {
     res.render('plants', {
       title : 'Plant list',
       plants : plants,
+      baseUrl : 'plants',
       user : req.user
     });
   });
 });
+
+router.get('/search/:term', function(req, res, next) {
+
+  console.log(req.query);
+  console.log(req.params.term)
+
+  var regex = new RegExp(req.params.term, 'i');
+
+  Plant.find()
+    .or([{'Family': regex}, {'Species': regex}])
+    .sort({Family:1})
+    .limit(10)
+
+  .paginate({page: req.query.page}, function(err, plants) {
+
+    if (err) { return next(err); }
+
+    res.render('plants', {
+      title : 'Plant list',
+      plants : plants,
+      user : req.user,
+      baseUrl : '/search/' + req.params.term
+    });
+  });
+})
 
 router.get('/plants/new', isLoggedIn, function(req, res) {
   res.render('new', {

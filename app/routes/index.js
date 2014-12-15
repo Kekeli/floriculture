@@ -121,7 +121,6 @@ router.get('/plants', function(req, res, next) {
 
 router.get('/search/:term', function(req, res, next) {
 
-  console.log(req.query);
   console.log(req.params.term)
 
   var regex = new RegExp(req.params.term, 'i');
@@ -129,18 +128,18 @@ router.get('/search/:term', function(req, res, next) {
   Plant.find()
     .or([{'Family': regex}, {'Species': regex}])
     .sort({Family:1})
-    .limit(10)
+    .paginate({page: req.query.page}, function(err, plants) {
 
-  .paginate({page: req.query.page}, function(err, plants) {
+      console.log(plants);
+      
+      if (err) { return next(err); }
 
-    if (err) { return next(err); }
-
-    res.render('plants', {
-      title : 'Plant list',
-      plants : plants,
-      user : req.user,
-      baseUrl : '/search/' + req.params.term
-    });
+      res.render('plants', {
+        title : 'Plant list',
+        plants : plants,
+        user : req.user,
+        baseUrl : '/search/' + req.params.term
+      });
   });
 })
 

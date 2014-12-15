@@ -73,10 +73,24 @@
       $(document).ready(function () {
         $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
 
-         $('#plant_search').typeahead({
-          name: 'typeahead',
+        var engine = new Bloodhound({
+          name: 'packages',
+          local: [],
           remote: '/search/%QUERY',
-          minLength: 3
+          datumTokenizer: function(d) {
+            return Bloodhound.tokenizers.whitespace(d.val);
+        },
+        queryTokenizer:
+          Bloodhound.tokenizers.whitespace
+        });
+
+        engine.initialize();
+
+        $('.typeahead').typeahead({
+          name: 'typeahead',
+          displayKey: 'value',
+          minLength: 3,
+          source: engine.ttAdapter()
         });
       });
     </script>

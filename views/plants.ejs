@@ -1,8 +1,8 @@
 
-<div class=row>
+<div id="filter" class="row" >
 	<!-- todo: display only for editor roles -->
 	<a class="btn btn-small btn-primary pull-left" href="/plants/new" disabled="true">Add a plant!</a>
-	<input type="text" name="typeahead" class="typeahead tt-query pull-right" autocomplete="off" spellcheck="false" placeholder="Search">
+	<input id="plant_search" type="text" name="typeahead" class="typeahead tt-query pull-right" autocomplete="off" spellcheck="false" placeholder="Search">
 </div>
 
 <div id="list" class="row">
@@ -35,5 +35,4 @@
 	</table>
 	
 	<%- plants.pagination.render({ baseUrl: baseUrl }) %>
-
 </div>

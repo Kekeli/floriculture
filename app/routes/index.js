@@ -41,7 +41,7 @@ router.get('/login', function(req, res) {
 // process the login form
 router.post('/login',
   passport.authenticate('local-login', {
-    successRedirect : '/profile', // redirect to the secure profile section
+    successRedirect : '/plants', // redirect to the plants list
     failureRedirect : '/login', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages
   })

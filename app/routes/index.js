@@ -41,7 +41,7 @@ router.get('/login', function(req, res) {
 // process the login form
 router.post('/login',
   passport.authenticate('local-login', {
-    successRedirect : '/profile', // redirect to the secure profile section
+    successRedirect : '/plants', // redirect to the plants list
     failureRedirect : '/login', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages
   })
@@ -113,10 +113,35 @@ router.get('/plants', function(req, res, next) {
     res.render('plants', {
       title : 'Plant list',
       plants : plants,
+      baseUrl : 'plants',
       user : req.user
     });
   });
 });
+
+router.get('/search/:term', function(req, res, next) {
+
+  console.log(req.params.term)
+
+  var regex = new RegExp(req.params.term, 'i');
+
+  Plant.find()
+    .or([{'Family': regex}, {'Species': regex}])
+    .sort({Family:1})
+    .paginate({page: req.query.page}, function(err, plants) {
+
+      console.log(plants);
+
+      if (err) { return next(err); }
+
+      res.render('plants', {
+        title : 'Plant list',
+        plants : plants,
+        user : req.user,
+        baseUrl : '/search/' + req.params.term
+      });
+    });
+})
 
 router.get('/plants/new', isLoggedIn, function(req, res) {
   res.render('new', {

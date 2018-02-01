@@ -9,7 +9,7 @@
     "express": "3.4.4",
     "express-partials": "*",
     "express-validator": "*",
-    "ejs": "*",
+    "ejs": "^2.5.5",
     "less-middleware": "*",
     "paginate": "*",
     "mongoose": "3.3.1",
